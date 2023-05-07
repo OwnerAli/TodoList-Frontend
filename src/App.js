@@ -13,19 +13,19 @@ class App extends React.Component {
         axios
             .get("https://todolist-backend-production-efd5.up.railway.app/todo/list")
             .then((response) => {
-                this.setState({ listItems: response.data });
+                this.setState({listItems: response.data});
             })
             .catch((error) => {
-                this.setState({ text: "Error fetching data" });
+                this.setState({text: "Error fetching data"});
             });
     }
 
     handleNewTodoTitleChange = (event) => {
-        this.setState({ newTodoTitle: event.target.value });
+        this.setState({newTodoTitle: event.target.value});
     };
 
     handleNewTodoContentChange = (event) => {
-        this.setState({ newTodoContent: event.target.value });
+        this.setState({newTodoContent: event.target.value});
     };
 
     handleAddTodo = () => {
@@ -47,6 +47,28 @@ class App extends React.Component {
                     newTodoTitle: "",
                     newTodoContent: "",
                 }));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    handleGetCompletedItems = () => {
+        axios
+            .get("https://todolist-backend-production-efd5.up.railway.app/todo/list/completed")
+            .then((response) => {
+                this.setState({listItems: response.data});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    handleGetUncompletedItems = () => {
+        axios
+            .get("https://todolist-backend-production-efd5.up.railway.app/todo/list/uncompleted")
+            .then((response) => {
+                this.setState({listItems: response.data});
             })
             .catch((error) => {
                 console.error(error);
@@ -135,31 +157,45 @@ class App extends React.Component {
                         type="text"
                         placeholder="Title"
                         style={inputStyle}
-                        value={this.state.newTodoTitle}  // Fixed here
+                        value={this.state.newTodoTitle}
                         onChange={this.handleNewTodoTitleChange}
                     />
                     <input
                         type="text"
                         placeholder="Content"
                         style={inputStyle}
-                        value={this.state.newTodoContent}  // Fixed here
+                        value={this.state.newTodoContent}
                         onChange={this.handleNewTodoContentChange}
                     />
                     <button style={buttonStyle} onClick={this.handleAddTodo}>
                         Add
                     </button>
                 </form>
+                <h2>Completed Items:</h2>
                 <ul style={listStyle}>
-                    {this.state.listItems
-                        .sort((a, b) => (a.completed && !b.completed ? 1 : -1))
-                        .map(item => (
-                            <li key={item.id}
-                                style={{...itemStyle, ...(item.completed ? completedStyle : notCompletedStyle)}}>
-                                <h2 style={titleStyle}>{item.title}</h2>
-                                <p>{item.content}</p>
-                                <p>Completed: {item.completed ? "YES" : "NO"}</p>
-                            </li>
-                        ))}
+                    {this.state.completedListItems.map((item) => (
+                        <li
+                            key={item.id}
+                            style={{...itemStyle, ...completedStyle}}
+                        >
+                            <h2 style={titleStyle}>{item.title}</h2>
+                            <p>{item.content}</p>
+                            <p>Completed: YES</p>
+                        </li>
+                    ))}
+                </ul>
+                <h2>Uncompleted Items:</h2>
+                <ul style={listStyle}>
+                    {this.state.uncompletedListItems.map((item) => (
+                        <li
+                            key={item.id}
+                            style={{...itemStyle, ...notCompletedStyle}}
+                        >
+                            <h2 style={titleStyle}>{item.title}</h2>
+                            <p>{item.content}</p>
+                            <p>Completed: NO</p>
+                        </li>
+                    ))}
                 </ul>
             </div>
         );
