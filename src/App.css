@@ -1,38 +1,55 @@
-.App {
+body {
+  background-color: #202020;
+  color: #fff;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.todo-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.completed-items,
+.uncompleted-items {
+  width: 48%;
+}
+
+.completed-items h2,
+.uncompleted-items h2 {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.completed-items ul,
+.uncompleted-items ul {
+  list-style: none;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.completed-items li {
+  background-color: #9ACD32;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.uncompleted-items li {
+  background-color: #FF8C69;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.completed-items .item-title,
+.uncompleted-items .item-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.completed-items .item-content,
+.uncompleted-items .item-content {
+  font-size: 1.2rem;
 }
